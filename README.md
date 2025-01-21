@@ -42,7 +42,7 @@ The template must have `tabindex` otherwise nothing will work.
     {
         if (firstRender)
         {
-            await FocusTrap.InitTrap(Id, DotObj, Settings);
+            await FocusTrap.InitTrap(_id, DotObj, Settings);
         }
 
         await base.OnAfterRenderAsync(firstRender);
