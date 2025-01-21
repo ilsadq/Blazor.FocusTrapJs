@@ -11,10 +11,10 @@
         <Authors>adequate</Authors>
         <Company>$(Authors)</Company>
         <PackageProjectUrl>https://github.com/ilsadq/Blazor.FocusTrapJs</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/ilsadq/Blazor.FocusTrapJs/blob/main/LICENSE</PackageLicenseUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/ilsadq/Blazor.FocusTrapJs.git</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
     </PropertyGroup>
 
     <ItemGroup>
@@ -29,6 +29,10 @@
         <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
+    </ItemGroup>
+
     <Target Name="RemoveFloatingScripts" BeforeTargets="PrePack">
         <ItemGroup>
             <None Remove="FocusTrapScripts.razor.js"/>
@@ -38,7 +42,7 @@
 
         <Message Importance="high" Text="Start remove npm dependencies"/>
     </Target>
-    
+
     <Target Name="NpmInstall" Inputs="package.json" Outputs="node_modules/.install-stamp">
         <Exec Command="npm ci" Condition="'$(RestorePackagesWithLockFile)' == 'true'"/>
         <Exec Command="npm install" Condition="'$(RestorePackagesWithLockFile)' != 'true'"/>
@@ -47,6 +51,7 @@
 
     <Target Name="NpmRunBuild" DependsOnTargets="NpmInstall">
         <Exec Command="npm run build"/>
+        <Message Importance="high" Text="Run vite build command"/>
     </Target>
 
     <Target Name="PrePack" DependsOnTargets="NpmRunBuild" BeforeTargets="BeforeBuild"/>
