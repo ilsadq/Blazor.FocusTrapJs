@@ -6,7 +6,7 @@ export default defineConfig({
         outDir: "./wwwroot",
         lib: {
             entry: resolve(__dirname, "./FocusTrapScripts.razor.js"),
-            name: "BlazorFocusTrap",
+            name: "FocusTrap",
             fileName: "FocusTrapScripts",
             formats: ["iife"]
         },
