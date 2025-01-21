@@ -11,6 +11,9 @@
         <PackageTags>focus,focus-trap,trap,blazor,dropdown,combobox</PackageTags>
         <Authors>adequate</Authors>
         <Company>$(Authors)</Company>
+        <PackageProjectUrl>https://github.com/ilsadq/Blazor.FocusTrapJs</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/ilsadq/Blazor.FocusTrapJs/blob/main/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/ilsadq/Blazor.FocusTrapJs</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
