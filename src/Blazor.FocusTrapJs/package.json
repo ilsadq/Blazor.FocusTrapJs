@@ -1,0 +1,17 @@
+{
+  "name": "blazor.focustrapjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "FocusTrapScripts.razor.js",
+  "scripts": {
+    "build": "vite build"
+  },
+  "private": true,
+  "dependencies": {
+    "focus-trap": "7.6.4"
+  },
+  "devDependencies": {
+    "vite": "^6.0.7",
+    "path": "^0.12.7"
+  }
+}

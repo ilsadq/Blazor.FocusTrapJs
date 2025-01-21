@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>C# Wrapper for focus-trap</Title>
+        <Description>Trap focus within a DOM node.</Description>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageTags>focus,focus-trap,trap,blazor,dropdown,combobox</PackageTags>
+        <Authors>adequate</Authors>
+        <Company>$(Authors)</Company>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.12"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="wwwroot\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
+
+    <Target Name="RemoveFloatingScripts" BeforeTargets="BeforeBuild">
+        <ItemGroup>
+            <None Remove="FocusTrapScripts.razor.js"/>
+            <Content Remove="package.json"/>
+            <Content Remove="package-lock.json"/>
+        </ItemGroup>
+
+        <Message Importance="high" Text="Start remove npm dependencies"/>
+    </Target>
+
+    <Target Name="NpmInstall" Inputs="package.json" Outputs="node_modules/.install-stamp">
+        <Exec Command="npm ci" Condition="'$(RestorePackagesWithLockFile)' == 'true'"/>
+        <Exec Command="npm install" Condition="'$(RestorePackagesWithLockFile)' != 'true'"/>
+        <Touch Files="node_modules/.install-stamp" AlwaysCreate="true"/>
+    </Target>
+
+    <Target Name="NpmRunBuild" DependsOnTargets="NpmInstall">
+        <Exec Command="npm run build"/>
+    </Target>
+
+    <Target Name="PrePack" DependsOnTargets="NpmRunBuild" BeforeTargets="BeforeRebuild"/>
+</Project>
