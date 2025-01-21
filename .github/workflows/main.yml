@@ -1,0 +1,35 @@
+name: Build and Publish NuGet Package
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore ./src/Blazor.FocusTrapJs
+
+      - name: Build project
+        run: dotnet build ./src/Blazor.FocusTrapJs --configuration Release --no-restore
+
+      - name: Pack and verify NuGet package
+        run: |
+          dotnet pack ./src/Blazor.FocusTrapJs --configuration Release --no-build
+          ls ./src/Blazor.FocusTrapJs/bin/Release/*.nupkg
+
+      - name: Publish to NuGet
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          dotnet nuget push ./src/Blazor.FocusTrapJs/bin/Release/*.nupkg \
+            --source https://api.nuget.org/v3/index.json \
+            --api-key $NUGET_API_KEY
